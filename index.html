@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gargoyle Systems — Fact Sheet</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f5f6f8;
+      color: #1a1a2e;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #0d1b2a;
+      padding: 36px 48px 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .header-text { flex: 1; }
+
+    .header-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    header .tagline {
+      font-size: 1.05rem;
+      color: #a8c0d6;
+      font-weight: 400;
+      max-width: 520px;
+      line-height: 1.5;
+    }
+
+    .header-logo img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      opacity: 0.92;
+    }
+
+    /* ── Problem bar ── */
+    .problem-bar {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 28px 48px;
+    }
+
+    .problem-bar p {
+      max-width: 860px;
+      font-size: 1.08rem;
+      line-height: 1.65;
+      color: #2d3748;
+    }
+
+    @media (max-width: 700px) {
+      .problem-bar { padding: 20px 16px; }
+    }
+
+    /* ── Comparison section ── */
+    .comparison-section {
+      background: #f8f9fa;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 36px 40px 40px;
+    }
+
+    .comparison-title {
+      margin-bottom: 24px;
+    }
+
+    .comparison-title .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #1565c0;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .comparison-title h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0d1b2a;
+      line-height: 1.15;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: #dde1e7;  /* thin separator between panels */
+    }
+
+    .comp-box {
+      background: #f8f9fa;
+      padding: 24px 0 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    .comp-box-label {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding-bottom: 10px;
+      border-top: 3px solid #94a3b8;
+      padding-top: 8px;
+      padding-right: 28px;
+    }
+
+    .comp-after .comp-box-label {
+      color: #16a34a;
+      border-top-color: #22c55e;
+    }
+
+    .comp-before .comp-box-label { color: #475569; }
+
+    .comp-box h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0d1b2a;
+      line-height: 1.2;
+      padding-right: 28px;
+    }
+
+    .comp-content {
+      display: flex;
+      align-items: flex-end;
+      flex: 1;
+      gap: 0;
+    }
+
+    .comp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+      width: 210px;
+      padding-bottom: 32px;
+    }
+
+    .comp-bullets li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.81rem;
+      color: #1a1a2e;
+      line-height: 1.3;
+    }
+
+    .comp-bullets li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .comp-bullets li.bad { color: #dc2626; }
+    .comp-bullets li.bad::before { background: #dc2626; }
+    .comp-bullets li.good { color: #16a34a; font-weight: 600; }
+
+    /* Building image — large, frameless, anchored bottom-right */
+    .comp-bldg-wrap {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .comp-bldg {
+      width: 100%;
+      max-width: 520px;
+      display: block;
+      object-fit: contain;
+      object-position: bottom right;
+      align-self: flex-end;
+    }
+
+    /* Subtle unit image tucked into the after panel */
+    .comp-unit-subtle {
+      position: absolute;
+      top: -20px;
+      left: -60px;
+      width: 100px;
+      object-fit: contain;
+      opacity: 0.82;
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .comparison-section { padding: 24px 16px; }
+      .comparison-grid { grid-template-columns: 1fr; gap: 2px; }
+      .comp-bullets { width: auto; flex: 1; }
+      .comp-bldg { max-width: 220px; }
+      .comparison-title h2 { font-size: 1.4rem; }
+    }
+
+    /* ── Page body ── */
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 48px;
+    }
+
+    /* ── Section cards ── */
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px 30px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1565c0;
+      font-weight: 700;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8f0fe;
+    }
+
+    /* Overview bullets */
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.97rem;
+      line-height: 1.55;
+      color: #2d3748;
+    }
+
+    .card ul li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1565c0;
+      margin-top: 8px;
+    }
+
+    /* Quick facts grid */
+    .facts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: #e8f0fe;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .fact-cell {
+      background: #fff;
+      padding: 16px 18px;
+    }
+
+    .fact-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1565c0;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .fact-value {
+      font-size: 0.95rem;
+      color: #1a1a2e;
+      line-height: 1.4;
+    }
+
+    /* Coverage items */
+    .coverage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .coverage-item { display: flex; flex-direction: column; gap: 4px; }
+
+    .coverage-item strong {
+      font-size: 0.93rem;
+      color: #1565c0;
+      font-weight: 700;
+    }
+
+    .coverage-item p {
+      font-size: 0.93rem;
+      color: #4a5568;
+      line-height: 1.5;
+    }
+
+    /* Dashboard image */
+    .dashboard-img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Best-fit tags */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background: #e8f0fe;
+      color: #1565c0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    /* Pricing */
+    .pricing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .price-tier {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .price-tier small {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #718096;
+      margin-top: 2px;
+    }
+
+    .price-amount {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1565c0;
+    }
+
+    /* CTA footer */
+    .cta-bar {
+      grid-column: 1 / -1;
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cta-bar .cta-left h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .cta-bar .cta-left p {
+      font-size: 0.9rem;
+      color: #a8c0d6;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 22px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: #1565c0;
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.35);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255,255,255,0.7);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      header { padding: 24px 20px; flex-direction: column; }
+      header h1 { font-size: 1.7rem; }
+      .hero-images { grid-template-columns: 1fr; max-height: none; }
+      .hero-images img { height: 240px; }
+      .page-body { grid-template-columns: 1fr; padding: 28px 16px 48px; gap: 24px; }
+      .card.full-width { grid-column: auto; }
+      .cta-bar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-text">
+      <div class="header-eyebrow">Product Fact Sheet</div>
+      <h1>Gargoyle Systems</h1>
+      <p class="tagline">Installed airspace drone awareness for commercial security teams</p>
+    </div>
+    <div class="header-logo">
+      <img src="fact_img_0.png" alt="Gargoyle Systems logo" />
+    </div>
+  </header>
+
+  <!-- ── Problem statement ── -->
+  <div class="problem-bar">
+    <p>Drone activity is surging, yet most critical sites still have zero visibility into low-altitude airspace. This creates a major blind spot for security teams responsible for physical safety, data protection, and privacy.</p>
+  </div>
+
+  <!-- ── Comparison section ── -->
+  <div class="comparison-section">
+    <div class="comparison-title">
+      <div class="eyebrow">Coverage</div>
+      <h2>From Blind Spot to Full Coverage</h2>
+    </div>
+    <div class="comparison-grid">
+
+      <!-- Before -->
+      <div class="comp-box comp-before">
+        <div class="comp-box-label">Before Gargoyle</div>
+        <h3>Ground Security Only</h3>
+        <div class="comp-content">
+          <ul class="comp-bullets">
+            <li>Ground perimeter monitored</li>
+            <li>Access points secured</li>
+            <li>Cameras and alarms active</li>
+            <li class="bad">Airspace: completely blind</li>
+            <li class="bad">Drone surveillance: undetectable</li>
+            <li class="bad">Payload delivery: no alert</li>
+          </ul>
+          <div class="comp-bldg-wrap">
+            <img class="comp-bldg" src="building1.png" alt="Building without airspace coverage" />
+          </div>
+        </div>
+      </div>
+
+      <!-- After -->
+      <div class="comp-box comp-after">
+        <div class="comp-box-label">After Gargoyle</div>
+        <h3>Ground + Airspace Full Coverage</h3>
+        <div class="comp-content">
+          <ul class="comp-bullets">
+            <li>Ground perimeter monitored</li>
+            <li>Access points secured</li>
+            <li>Cameras and alarms active</li>
+            <li class="good">Airspace: real-time detection</li>
+            <li class="good">Drone tracking: instant classification</li>
+            <li class="good">Unauthorized flight: immediate alert</li>
+          </ul>
+          <div class="comp-bldg-wrap">
+            <img class="comp-unit-subtle" src="unit_app.png" alt="Gargoyle unit" />
+            <img class="comp-bldg" src="building 2.png" alt="Building with full airspace coverage" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Page body ── -->
+  <div class="page-body">
+
+    <!-- Overview -->
+    <div class="card">
+      <h2>Overview</h2>
+      <ul>
+        <li>Adds low-altitude drone awareness around the property perimeter.</li>
+        <li>Designed for day-to-day security operations.</li>
+        <li>Routes operational signals to the team responsible for the site.</li>
+        <li>Works as a clean extension of the existing security stack.</li>
+      </ul>
+    </div>
+
+    <!-- Quick Facts -->
+    <div class="card">
+      <h2>Quick Facts</h2>
+      <div class="facts-grid">
+        <div class="fact-cell">
+          <div class="fact-label">Format</div>
+          <div class="fact-value">Installed hardware plus software, API, and mobile alerts</div>
+        </div>
+        <div class="fact-cell">
+          <div class="fact-label">Primary User</div>
+          <div class="fact-value">Commercial security teams</div>
+        </div>
+        <div class="fact-cell">
+          <div class="fact-label">Coverage</div>
+          <div class="fact-value">Remote ID, radio frequency, acoustic</div>
+        </div>
+        <div class="fact-cell">
+          <div class="fact-label">Outcome</div>
+          <div class="fact-value">Friend or foe context</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What It Covers -->
+    <div class="card">
+      <h2>What It Covers</h2>
+      <div class="coverage-list">
+        <div class="coverage-item">
+          <strong>Remote ID</strong>
+          <p>Recognizes broadcast identity when available so compliant aircraft are easier to interpret and clear quickly.</p>
+        </div>
+        <div class="coverage-item">
+          <strong>Radio Frequency</strong>
+          <p>Surfaces RF activity associated with nearby drones and controllers operating around the property.</p>
+        </div>
+        <div class="coverage-item">
+          <strong>Acoustic</strong>
+          <p>Adds local listening coverage for low-altitude drone signatures where visual context may be limited.</p>
+        </div>
+        <div class="coverage-item">
+          <strong>Friend or Foe</strong>
+          <p>Combines sensing inputs to help the security team understand what is known, expected, suspicious, or unknown.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detection dashboard -->
+    <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+      <h2>Live Detection Interface</h2>
+      <img class="dashboard-img" src="fact_img_3.png" alt="Gargoyle Systems UAS detection dashboard" />
+    </div>
+
+    <!-- Best-Fit Facilities -->
+    <div class="card">
+      <h2>Best-Fit Facilities</h2>
+      <div class="tag-list">
+        <span class="tag">Critical assets</span>
+        <span class="tag">Corporate campuses</span>
+        <span class="tag">Data centers</span>
+        <span class="tag">Industrial &amp; utility sites</span>
+        <span class="tag">Logistics hubs</span>
+        <span class="tag">Stadiums &amp; venues</span>
+        <span class="tag">Universities &amp; research campuses</span>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="card">
+      <h2>Price</h2>
+      <div class="pricing-list">
+        <div class="price-row">
+          <div class="price-tier">
+            G1
+            <small>Remote ID only</small>
+          </div>
+          <div class="price-amount">$999<span style="font-size:0.75rem;font-weight:500;color:#718096">/unit</span></div>
+        </div>
+        <div class="price-row">
+          <div class="price-tier">
+            G2
+            <small>Remote ID, RF, Acoustic</small>
+          </div>
+          <div class="price-amount">$3,499<span style="font-size:0.75rem;font-weight:500;color:#718096">/unit</span></div>
+        </div>
+        <div class="price-row">
+          <div class="price-tier">
+            Data
+            <small>Network connectivity &amp; alerting</small>
+          </div>
+          <div class="price-amount" style="font-size:0.9rem;color:#718096">Depends on size of network</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA bar -->
+    <div class="cta-bar">
+      <div class="cta-left">
+        <h3>See it in action or reach out</h3>
+        <p>contact: <a href="mailto:mike@gargoylesystems.io" style="color:#4fc3f7;text-decoration:none;">mike@gargoylesystems.io</a></p>
+      </div>
+      <div class="cta-buttons">
+        <a href="https://ksc-gargoyle-demo.netlify.app" target="_blank" class="btn btn-primary">View Live Demo</a>
+        <a href="https://gargoylesystems.io" target="_blank" class="btn btn-outline">Visit Website</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
